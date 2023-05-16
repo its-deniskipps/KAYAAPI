@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KAYAAPI", "KAYAAPI.csproj", "{4E6467D9-3C31-4A24-83A5-2678D829FEBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF29DF8F-FFE5-48A9-B860-F8244C5DE9A2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E6467D9-3C31-4A24-83A5-2678D829FEBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E6467D9-3C31-4A24-83A5-2678D829FEBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E6467D9-3C31-4A24-83A5-2678D829FEBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E6467D9-3C31-4A24-83A5-2678D829FEBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCE8F2A2-7DC9-4E34-80D2-C7C2496510B2}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal
