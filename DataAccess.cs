@@ -30,34 +30,36 @@ namespace KAYAAPI
             }
         }
 
-        internal string InsertUtilityTransaction(UtilityTransaction Tran)
+        internal string InsertUtilityTransaction(UtilityTransaction Tran, string TokenSent)
         {
             log.LogWrite("InsertUtilityTransaction", "ENTERED DATAACESS FUNCTION");
             log.LogWrite("InsertUtilityTransaction", "INSERTING TRANSACTION TO PARK....");
-            if (Tran.Field2 != null)
-            {
-                log.LogWrite("InsertUtilityTransaction", "Inserting Field2 As: " + Tran.Field2);
-            }
+            //if (Tran.Field2 != null)
+            //{
+            //    log.LogWrite("InsertUtilityTransaction", "Inserting Field2 As: " + Tran.Field2);
+            //}
             
-            DataTable results;
+            //DataTable results;
             string insertedId = "F";
             try
             {
-                mycommand = KAYADB.GetStoredProcCommand("sp_InsertUtilityTransaction", Tran.Amount, Tran.Custref, Tran.Cust_name, Tran.Cust_phone, Tran.Tranref, 
-                    Tran.Utility_code, Tran.Field1, Tran.Field2, Tran.Field3, Tran.Field4, Tran.Field5, Tran.Field6, Tran.Field7, Tran.Field8, Tran.Field9
-                    , Tran.Field10, Tran.Field11, Tran.Field12, Tran.Field13, Tran.Field14, Tran.Field15, Tran.Field16, Tran.Field17, Tran.Field18, Tran.Field19
-                    , Tran.Field20, Tran.Field21, Tran.Field22, Tran.Field23, Tran.Field24, Tran.Field25, Tran.Field26, Tran.Field27, Tran.Field28,
-                    Tran.Field29, Tran.Field30);
-                DataSet ds = KAYADB.ExecuteDataSet(mycommand);
-                results = ds.Tables[0];
-                if (results.Rows.Count > 0)
+                // string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=KAYADB;User Id=apiuser ;Password=Manager123;";
+                string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=KAYADB;Integrated Security=true;";
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    insertedId = results.Rows[0]["InsertedId"].ToString();
+                    connection.Open();
+
+                    String query = "insert into payments (custcode,paymentamt,token,createdtime) values (@custcode,@paymentAmt,@token,GETDATE());";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@paymentAmt", Tran.Amount);
+                        command.Parameters.AddWithValue("@token", TokenSent);
+                        command.Parameters.AddWithValue("@custcode", Tran.Custref);
+
+                        command.ExecuteNonQuery();
+                    }
                 }
-                if (Tran.Field2 != null)
-                {
-                    log.LogWrite("InsertUtilityTransaction", "After Insert, Field2 Is: " + Tran.Field2);
-                }
+
             }
             catch (Exception ex)
             {

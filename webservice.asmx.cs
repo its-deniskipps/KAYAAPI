@@ -189,32 +189,38 @@ namespace KAYAAPI
                 utilTran.Cust_phone = kayaPay.Custphone;
                 utilTran.Utility_code = kayaPay.KayarequestCode;
                 utilTran.Tranref = kayaPay.Paymentreference;
-                utilTran.Field1 = kayaPay.Custype;
-                utilTran.Field2 = kayaPay.PayType;
+                //utilTran.Field1 = kayaPay.Custype;
+                //utilTran.Field2 = kayaPay.PayType;
                 int minAmt = 1000;
                 int maxAmt = 1000000;
                 int amt = Int32.Parse(utilTran.Amount);
-              
-               // string insertResp = da.InsertUtilityTransaction(utilTran);
-                string insertResp = "987878";
-                if (!insertResp.Trim().Equals("F"))
+
+                var chars = "0123456789";
+                var stringChars = new char[24];
+                var random = new Random();
+
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                }
+                var TokenGen = new String(stringChars);
+                int Tokensize = (amt/500);
+                //var Tokensize = Int32.Parse(Tokensize1);
+                //Console.WriteLine(Decimal.ToInt32(Tokensize));
+
+                //log.LogWrite("TokenSizee", Tokensize);
+                string TokenSent = kayaPay.Custref +"_"+ Tokensize +"_" +TokenGen;
+                log.LogWrite("Token Sent", TokenSent);
+
+                if (TokenGen != null)
                 {
                     if (amt >= minAmt)
                     {
                         if (amt <= maxAmt)
                         {
-                            var chars = "0123456789";
-                            var stringChars = new char[32];
-                            var random = new Random();
-
-                            for (int i = 0; i < stringChars.Length; i++)
-                            {
-                                stringChars[i] = chars[random.Next(chars.Length)];
-                            }
-                            var finalString = new String(stringChars);
-
-                            InqStatus = "S";
-                            Resp = InqStatus + "|" + finalString;
+                            string insertResp = da.InsertUtilityTransaction(utilTran, TokenSent);
+                            InqStatus = "Success| " + "Token :" + TokenSent + "^" + "TokenUnits :" + Tokensize;
+                            Resp = InqStatus;
                         }
                         else
                         {
@@ -228,7 +234,7 @@ namespace KAYAAPI
                 }
                 else
                 {
-                    Resp = InqStatus + "|777|KAYA PAYMENT PARKING RETURNED NO REFERENCE OR FAILED!";
+                    Resp = InqStatus + "|777|KAYA PAYMENT RETURNED NO REFERENCE OR FAILED!";
                 }
 
             }
@@ -236,7 +242,6 @@ namespace KAYAAPI
             {
                 Resp = InqStatus + "|999|KAYA PAYMENT PARKING INSERT ERROR";
                 log.LogWrite("NotifyKayaParked", ex.Message);
-                log.LogWrite("NotifyKayaParked", ex.InnerException.ToString());
             }
 
             log.LogWrite("NotifyKayaParked", Resp);
