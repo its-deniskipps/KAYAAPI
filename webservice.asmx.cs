@@ -43,7 +43,7 @@ namespace KAYAAPI
 
             try
             {
-                if (ApiUsername.Trim() == "KAYAUSER" && ApiPassword.Trim() == "!@#$%^&*")
+                if (ApiUsername.Trim() == "KAYAUSER" && ApiPassword.Trim() == "!@#$1234")
                 {
                     if (requestCode != null && !requestCode.Trim().Equals(""))
                     {
@@ -126,7 +126,7 @@ namespace KAYAAPI
 
             try
             {
-                if (ApiUsername.Trim() == "KAYAUSER" && ApiPassword.Trim() == "!@#$%^&*")
+                if (ApiUsername.Trim() == "KAYAUSER" && ApiPassword.Trim() == "!@#$1234")
                 {
                     if (kayarequestCode != null && !kayarequestCode.Trim().Equals(""))
                     {
